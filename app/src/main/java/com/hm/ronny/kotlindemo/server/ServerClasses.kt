@@ -1,13 +1,13 @@
-package com.hm.ronny.kotlindemo.net
+package com.hm.ronny.kotlindemo.server
 
 
 /**
  * 该文件中存放着所有天气json会用到的数据类
  * Created by Ronny on 2017/8/3.
  */
-data class ForecastResult(val city:City,val list:List<Forecast>)
+data class ForecastResult(val city: City, val list:List<Forecast>)
 
-data class City(val id:Int,val name: String,val coord:Coordinates,val country:String,val population:Int)
+data class City(val id:Int, val name: String, val coord: Coordinates, val country:String, val population:Int)
 
 data class Coordinates(val lon:Float,val lat:Float)
 

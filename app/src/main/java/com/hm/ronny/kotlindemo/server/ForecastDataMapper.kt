@@ -1,7 +1,7 @@
-package com.hm.ronny.kotlindemo.net
+package com.hm.ronny.kotlindemo.server
 
-import com.hm.ronny.kotlindemo.domain.Forecast as ModelForecast
-import com.hm.ronny.kotlindemo.domain.ForecastList
+import com.hm.ronny.kotlindemo.domain.module.Forecast as ModelForecast
+import com.hm.ronny.kotlindemo.domain.module.ForecastList
 import java.text.DateFormat
 import java.util.*
 
@@ -21,8 +21,11 @@ class ForecastDataMapper {
     private fun convertForecastItemToDomain(forecast: Forecast): ModelForecast {
         return ModelForecast(convertDate(forecast.dt),
                 forecast.weather[0].description, forecast.temp.max.toInt(),
-                forecast.temp.min.toInt())
+                forecast.temp.min.toInt(),generateIconUrl(forecast.weather[0].icon))
     }
+
+    private fun generateIconUrl(iconCode: String): String = "http://openweathermap.org/img/w/$iconCode.png"
+
     private fun convertDate(date: Long): String {
         val df = DateFormat.getDateInstance(DateFormat.MEDIUM, Locale.getDefault())
         return df.format(date * 1000)

@@ -1,14 +1,19 @@
-package com.hm.ronny.kotlindemo.activity
+package com.hm.ronny.kotlindemo.ui.activity
 
+import android.app.ProgressDialog
 import android.content.Context
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.os.SystemClock
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.util.Log
 import android.widget.TextView
 import com.hm.ronny.kotlindemo.R
-import com.hm.ronny.kotlindemo.adapter.ForecastListAdapter
-import com.hm.ronny.kotlindemo.net.ForecastRequest
+import com.hm.ronny.kotlindemo.ui.adapter.ForecastListAdapter
+import com.hm.ronny.kotlindemo.domain.commands.RequestForecastCommand
+import com.hm.ronny.kotlindemo.domain.module.Forecast
+import kotlinx.android.synthetic.main.item_list.*
 import org.jetbrains.anko.*
 
 class WeatherActivity : AppCompatActivity() {
@@ -28,28 +33,50 @@ class WeatherActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_weather)
-        val recyclerView = find<RecyclerView>(R.id.forecastlist)
+//        val recyclerView = find<RecyclerView>(R.id.forecastlist)
+        var recyclerView=find<RecyclerView>(R.id.forecastlist)
         val layoutManager = LinearLayoutManager(this)
-        val url = ""
-        async {
-            ForecastRequest(url)
+        recyclerView.layoutManager=layoutManager
+        val progressDialog = ProgressDialog(this)
+        with(progressDialog) {
+            setMessage("数据加载中请稍等")
+            setCancelable(true)
+            show()
+        }
+        doAsync {
+            val result = RequestForecastCommand("94043").execute()
+            Log.e(javaClass.simpleName,result.toString())
+            SystemClock.sleep(2000)
             uiThread {
-                longToast("request performed")
+                recyclerView.adapter=ForecastListAdapter(result){
+                    toast(it.date)
+                }
+                progressDialog.dismiss()
+
             }
         }
-        recyclerView.layoutManager=layoutManager
-        recyclerView.adapter=ForecastListAdapter(items)
 
     }
+
+    override fun onResume() {
+        super.onResume()
+
+    }
+
+
+
+
+
+
+
 
     //扩展函数,这就给TextView扩展了get和set两个方法
     public var TextView.text:CharSequence
         get() = getText()
         set(value) = setText(value)
-
     fun example(){
-
         //变量申明符号：val——不可变 var——可变
         //类型申明和转换
         val a:Boolean=true

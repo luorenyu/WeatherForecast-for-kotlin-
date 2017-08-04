@@ -1,7 +1,9 @@
-package com.hm.ronny.kotlindemo.domain
+package com.hm.ronny.kotlindemo.domain.commands
 
-import com.hm.ronny.kotlindemo.net.ForecastDataMapper
-import com.hm.ronny.kotlindemo.net.ForecastRequest
+import com.hm.ronny.kotlindemo.domain.module.Command
+import com.hm.ronny.kotlindemo.domain.module.ForecastList
+import com.hm.ronny.kotlindemo.server.ForecastDataMapper
+import com.hm.ronny.kotlindemo.server.ForecastRequest
 
 /**
  * Created by Ronny on 2017/8/3.
