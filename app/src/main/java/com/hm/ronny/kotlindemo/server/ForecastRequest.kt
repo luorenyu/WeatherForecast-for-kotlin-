@@ -17,7 +17,7 @@ class ForecastRequest(val zipCode:String) {
     }
 
 
-    fun execute(): ForecastResult {
+    fun execute(): ForecastResult? {
         Log.e(javaClass.simpleName,"请求链接：$COMPLETE_URL$zipCode")
         val forecastJsonStr=URL(COMPLETE_URL+zipCode).readText()
         Log.e(javaClass.simpleName,"请求链接：$COMPLETE_URL$zipCode 返回结果：$forecastJsonStr")

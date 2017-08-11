@@ -5,20 +5,19 @@ import android.content.Intent
 import android.graphics.Color
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.TextView
 import android.widget.Toast
 import com.hm.ronny.kotlindemo.R
-import org.jetbrains.anko.find
+import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity()  {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val textView = find<TextView>(R.id.test1)
-        textView.text="Hello Kotlin"
-        textView.setTextColor(Color.parseColor("#88ff0000"))
-        textView.textSize = 25f
-        textView.setOnClickListener {
+
+        test1.text="Hello Kotlin"
+        test1.setTextColor(Color.parseColor("#88ff0000"))
+        test1.textSize = 25f
+        test1.setOnClickListener {
             toast2("Get Weather Go")
             val intent = Intent(this, WeatherActivity::class.java)
             startActivity(intent)
